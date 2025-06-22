@@ -1,0 +1,6 @@
+├── .github
+│   └── workflows
+│       └── signer.yml    # GitHub Actions 工作流
+├── main.py               # 主脚本文件
+├── requirements.txt      # 依赖文件
+└── README.md             # 说明文档
