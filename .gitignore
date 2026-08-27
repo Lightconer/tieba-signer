@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# 环境 / 密钥（切勿提交 BDUSS）
+.env
+*.env
+
+# IDE
+.idea/
+.vscode/

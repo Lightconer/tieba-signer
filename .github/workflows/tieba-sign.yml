@@ -1,0 +1,37 @@
+name: Tieba Auto Sign
+
+# 触发方式：
+#  1. schedule  每日定时（cron 为 UTC 时间，30 22 * * * 即北京时间 06:30）
+#  2. workflow_dispatch  支持在 Actions 页面手动触发（用于首次运行/补签）
+on:
+  schedule:
+    - cron: '30 22 * * *'
+  workflow_dispatch:
+
+jobs:
+  tieba-sign:
+    name: 百度贴吧自动签到
+    runs-on: ubuntu-latest
+    # 若仅需默认权限（只读），保持最小权限即可
+    permissions:
+      contents: read
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 配置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 运行贴吧签到
+        env:
+          # BDUSS 从仓库 Secrets 中读取，无需在代码中暴露
+          BDUSS: ${{ secrets.BDUSS }}
+        run: python tieba_sign.py
